@@ -1,14 +1,15 @@
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ProductBean implements Serializable {
     private List<Product> products;
-    private Product selectedProduct;
+    private Product selectedProduct=new Product();
     private Product newProduct;
 
     public ProductBean() {
@@ -50,14 +51,26 @@ public class ProductBean implements Serializable {
 
     public void addProduct() {
         // Assign a new ID for the new product
-        int newId = products.size() + 1;
+        int newId = products.get(products.size()-1).getId() + 1;
         newProduct.setId(newId);
         products.add(newProduct);
         newProduct = new Product(); // Reset newProduct after adding
     }
 
-    public void updateProduct(Product product) {
-        // Implement update logic
+    public void updateProduct() {
+        int foundIndex=-1;
+        for(int index=0;index<products.size();index++){
+            if(products.get(index).getId() == selectedProduct.getId()){
+                System.out.println(index+" found");
+                foundIndex=index;
+                break;
+            }
+        }
+        if(foundIndex!=-1){
+            products.set(foundIndex,selectedProduct);
+            selectedProduct = new Product();
+            foundIndex=-1;
+        }
     }
 
     public void deleteProduct(Product product) {

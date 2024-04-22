@@ -54,30 +54,30 @@
                 <f:facet name="header">Price</f:facet>
                 #{product.price}
             </h:column>
-<!--            <h:column>-->
-<!--                <h:commandButton value="Edit" onclick=""/>-->
-<!--                <h:commandButton value="Delete" action="#{productBean.deleteProduct(product)}"/>-->
-<!--            </h:column>-->
+            <h:column>
+                <h:commandButton value="Delete" action="#{productBean.deleteProduct(product)}"/>
+            </h:column>
         </h:dataTable>
-
-        <!-- Edit Dialog -->
-        <div id="editDialog" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc;">
-            <h2>Edit Product</h2>
-            <h:form id="editForm">
-                <h:panelGrid columns="2">
-                    <h:outputText value="Name:"/>
-                    <h:inputText value="#{productBean.selectedProduct.name}"/>
-
-                    <h:outputText value="Price:"/>
-                    <h:inputText value="#{productBean.selectedProduct.price}"/>
-                </h:panelGrid>
-                <h:commandButton value="Save" action="#{productBean.updateProduct(productBean.selectedProduct)}" onclick="hideEditDialog();"/>
-                <h:commandButton value="Cancel" onclick="hideEditDialog();"/>
-            </h:form>
-        </div>
     </h:form>
 
-    <!-- Create Form -->
+        <!-- Edit Dialog -->
+            <h2>Edit Product</h2>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="ID:"/>
+                    <h:inputText value="#{productBean.selectedProduct.id}" />
+                    <h:outputText value="Name:"/>
+                    <h:inputText value="#{productBean.selectedProduct.name}"/>
+                    <h:outputText value="Price:"/>
+                    <h:inputText value="#{productBean.selectedProduct.price}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:inputText>
+                </h:panelGrid>
+                <h:commandButton value="Update" action="#{productBean.updateProduct}" />
+            </h:form>
+            <h:outputText value="#{productBean.selectedProduct.id}" />
+
+
     <!-- Create Form -->
     <h2>Create Product</h2>
     <h:form id="createForm">
