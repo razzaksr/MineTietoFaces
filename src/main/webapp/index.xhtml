@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Product Management</title>
+    <script>
+        function showEditDialog() {
+            document.getElementById('editDialog').style.display = 'block';
+        }
+
+        function hideEditDialog() {
+            document.getElementById('editDialog').style.display = 'none';
+        }
+    </script>
+</h:head>
+<f:view>
+    <h:outputLabel value="Hello, world"/>
+    <h:form>
+        <h:inputText value="" />
+        <h:commandButton value="Forward" />
+    </h:form>
+    <br/>
+
+    <h:form>
+        <h:inputText value="#{bankBranches.bankName}"/>
+        <h:inputText value="#{bankBranches.branchName}"/>
+        <h:inputText value="#{bankBranches.ifsCode}"/>
+        <h:inputText value="#{bankBranches.contact}"/>
+
+        <h:commandButton value="Send" action="branchDetails.xhtml" />
+    </h:form>
+
+<!--    <a href="componants.xhtml">New Components</a>-->
+    <a href="loadFromBean.xhtml">Loaded from Bean</a>
+</f:view>
+<h:body>
+    <h1>Product Management</h1>
+
+    <h:form id="productForm">
+        <h:dataTable value="#{productBean.products}" var="product" border="1">
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                #{product.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                #{product.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Price</f:facet>
+                #{product.price}
+            </h:column>
+<!--            <h:column>-->
+<!--                <h:commandButton value="Edit" onclick=""/>-->
+<!--                <h:commandButton value="Delete" action="#{productBean.deleteProduct(product)}"/>-->
+<!--            </h:column>-->
+        </h:dataTable>
+
+        <!-- Edit Dialog -->
+        <div id="editDialog" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc;">
+            <h2>Edit Product</h2>
+            <h:form id="editForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Name:"/>
+                    <h:inputText value="#{productBean.selectedProduct.name}"/>
+
+                    <h:outputText value="Price:"/>
+                    <h:inputText value="#{productBean.selectedProduct.price}"/>
+                </h:panelGrid>
+                <h:commandButton value="Save" action="#{productBean.updateProduct(productBean.selectedProduct)}" onclick="hideEditDialog();"/>
+                <h:commandButton value="Cancel" onclick="hideEditDialog();"/>
+            </h:form>
+        </div>
+    </h:form>
+
+    <!-- Create Form -->
+    <!-- Create Form -->
+    <h2>Create Product</h2>
+    <h:form id="createForm">
+        <h:panelGrid columns="2">
+            <h:outputText value="Name:"/>
+            <h:inputText value="#{productBean.newProduct.name}"/>
+
+            <h:outputText value="Price:"/>
+            <h:inputText value="#{productBean.newProduct.price}">
+                <f:convertNumber pattern="#,##0.00"/>
+            </h:inputText>
+        </h:panelGrid>
+        <h:commandButton value="Create" action="#{productBean.addProduct}" />
+    </h:form>
+
+</h:body>
+</html>
